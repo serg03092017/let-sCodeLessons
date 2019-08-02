@@ -17,16 +17,14 @@ public class GreetingController {
     @Autowired
     private MessageRepo messageRepo;
 
-    @GetMapping("/greeting")
+    @GetMapping("/")
     public String greeting(
-            @RequestParam(name="name", required=false, defaultValue="World") String name,
             Map<String, Object> model
     ) {
-        model.put("name", name);
         return "greeting";
     }
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Map<String, Object> model) {
         Iterable<Message> messages = messageRepo.findAll();
 
@@ -35,11 +33,10 @@ public class GreetingController {
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("/main")
     public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
+
         Message message = new Message(text, tag);
-
-
 
         messageRepo.save(message);
 
@@ -65,12 +62,12 @@ public class GreetingController {
         return "main";
     }
 
-
+/*
     @RequestMapping(value = "main", method = RequestMethod.GET)     // or user @PostMapping
     public String greeting(Message employee) {
         return "greeting";
     }
-
+*/
 
 /*
 //If you use HTML
